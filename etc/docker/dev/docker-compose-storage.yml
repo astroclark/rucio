@@ -18,6 +18,7 @@ services:
       - ../../../tools:/opt/rucio/tools
       - ../../../bin:/opt/rucio/bin
       - ../../../lib:/opt/rucio/lib
+      - /home/jclark/Projects/igwn-rucio-dev:/igwn-rucio-dev
     environment:
       - X509_USER_CERT=/opt/rucio/etc/usercert.pem
       - X509_USER_KEY=/opt/rucio/etc/userkey.pem
@@ -28,6 +29,8 @@ services:
       - POSTGRES_USER=rucio
       - POSTGRES_DB=rucio
       - POSTGRES_PASSWORD=secret
+    volumes:
+      - /home/jclark/Projects/igwn-rucio-dev:/igwn-rucio-dev
     ports:
       - "5432:5432"
     command: ["-c", "fsync=off","-c", "synchronous_commit=off","-c", "full_page_writes=off"]
