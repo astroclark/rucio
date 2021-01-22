@@ -23,6 +23,50 @@ services:
       - X509_USER_CERT=/opt/rucio/etc/usercert.pem
       - X509_USER_KEY=/opt/rucio/etc/userkey.pem
       - RDBMS=postgres11
+  rucio-igwn_old:
+    image: rucio/rucio-dev:py3
+    hostname: rucio
+    ports:
+      - "8888:443"
+    links:
+      - ruciodb:ruciodb
+      - graphite:graphite
+      - fts:fts
+      - ftsdb:ftsdb
+      - xrd1:xrd1
+      - xrd2:xrd2
+      - xrd3:xrd3
+      - minio:minio
+    volumes:
+      - ../../../tools:/opt/rucio/tools
+      - ../../../bin:/opt/rucio/bin
+      - ../../../lib:/opt/rucio/lib
+      - /home/jclark/Projects/igwn-rucio-dev:/igwn-rucio-dev
+    environment:
+      - RUCIO_HOME=/igwn-rucio-dev/igwn_old
+      - RDBMS=postgres11
+  rucio-igwn_dev:
+    image: rucio/rucio-dev:py3
+    hostname: rucio
+    ports:
+      - "7777:443"
+    links:
+      - ruciodb:ruciodb
+      - graphite:graphite
+      - fts:fts
+      - ftsdb:ftsdb
+      - xrd1:xrd1
+      - xrd2:xrd2
+      - xrd3:xrd3
+      - minio:minio
+    volumes:
+      - ../../../tools:/opt/rucio/tools
+      - ../../../bin:/opt/rucio/bin
+      - ../../../lib:/opt/rucio/lib
+      - /home/jclark/Projects/igwn-rucio-dev:/igwn-rucio-dev
+    environment:
+      - RUCIO_HOME=/igwn-rucio-dev/igwn_dev
+      - RDBMS=postgres11
   ruciodb:
     image: postgres:11
     environment:
